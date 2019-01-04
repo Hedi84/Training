@@ -1,0 +1,39 @@
+Exercises
+Say you had a ridiculously powerful computer that can make 1.79 * 10^308 calculations without breaking a sweat. You run the following code through it:
+for (let i = 0; i < Number.MAX_VALUE - 1; i++) {
+    /* Do something */
+}
+What would happen and, importantly, why? (I wouldn't suggest actually running the code as it is. Spoiler alert: It's an infinite loop.) Suggest some ways of making it a finite loop for that ridiculously powerful computer.
+
+
+
+for (let i = 0; i < Number.MAX_VALUE - 1; i++) {
+    /* Do something */
+}
+
+Number.MAX_VALUE = 1.7976931348623157e+308
+
+Console:
+> Number.MAX_VALUE - 1
+1.7976931348623157e+308
+
+Since 1 is negligible for a number as high as that, it doesn't even decrease by 1 each loop. The computer is powerful enough to work with a number that high, however, it loses precision!
+
+
+This means that when i reaches a number high enough to neglect 1, it will stop incrementing as well, which means it will be stuck in the loop high_number < Number.MAX_VALUE.
+
+Solutions could be:
+- using Number.MAX_SAFE_INTEGER instead
+- instead of increasing i by 1 every loop, increase it by a (much) higher number, or increase the number (with one 0) for each loop.
+- setting a set number of loops for the function (for example, stop when i reaches Number.MAX_SAFE_INTEGER)
+
+
+      2. A bank financial audit is scheduled to run at 4am every day. Bank transactions are labelled with timestamps giving the number of seconds that have elapsed since the system was first commissioned. The audit job collects all the transactions that have happened in the last 24 * 60 * 60 = 86,400 seconds, and performs checks on them all. What problems can you see with this approach? (Hint: There are several!)
+
+The person writing the audit assumes that time is always the same and never changes, however:
+
+- the audit is written with the idea that there are no delays in executing the code, it will just be run in the exact same time every time. I don't believe you can assume that since there may be circumstances that delay it.
+- years don't always have 365 days, months aren't always 30 or 31 days.
+- Everything will mess up twice a year due to daylight saving time
+- time is different at different locations all over the world (timezones)
+- days don't actually always have 86,400 seconds (leap seconds)
